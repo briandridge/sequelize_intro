@@ -1,0 +1,26 @@
+{
+  "name": "sequelize_intro",
+  "version": "1.0.0",
+  "description": "<!--9:45 5 minutes -->",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/briandridge/sequelize_intro.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/briandridge/sequelize_intro/issues"
+  },
+  "homepage": "https://github.com/briandridge/sequelize_intro#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cors": "^2.8.1",
+    "express": "^4.14.0"
+  }
+}
