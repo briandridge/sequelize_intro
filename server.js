@@ -3,6 +3,10 @@ var express = require('express');
 var app = express();
 var port    = process.env.PORT || 3000;
 // var routes = require('./config/routes');
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize('postgres://briandridge@localhost:5432/test_sequelize');
+// console.log(sequelize);
+
 
 // dependencies //
 var cors = require('cors');
@@ -20,24 +24,55 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('index.html'));
 // app.use(logger('dev'));
 
-
-
-// start server
+// start server //
 app.listen(port, function() {
 	console.log("listening on " + port);
 });
 
+// models //
+var User = sequelize.define('user', {
+  name: {
+    type: Sequelize.STRING
+  },
+  saying: {
+    type: Sequelize.STRING
+  }
+});
+
+User.sync({force: true}).then(function () {
+  return User.create({
+    name: 'Brian',
+    saying: 'HELLO!!!!!!!!'
+  });
+});
+
+var Book = sequelize.define('book', {
+	title: {
+		type: Sequelize.STRING
+	},
+	author: {
+		type: Sequelize.STRING
+	}
+});
+
+Book.sync({force: true}).then(function () {
+	return Book.create({
+		title: 'Kafka on the Shore',
+		author: 'Murakami'
+	});
+});
 
 // routes //
-
-
-// console.log("routes.js");
-
-// var express = require('express');
 var router = express.Router();
 
-app.get('/', function homepage(req, res) {
-   res.sendFile(__dirname + '/index.html');
-   });
+app.get('/', function (req, res) {
+   // res.sendFile(__dirname + '/index.html');
 
-// module.exports = router;
+   User.findOne().then(function (user) {
+   Book.findOne().then(function (book) {
+   	res.json({name: user.name, saying: user.saying, title: book.title, author: book.author});
+   });
+   });
+});
+
+
